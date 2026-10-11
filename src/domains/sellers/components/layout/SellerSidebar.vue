@@ -26,21 +26,25 @@
         v-for="item in sellerNavItems"
         :key="item.href"
         :to="item.href"
-        :class="[
-          'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors outline-none group',
-          isActive(item.href)
-            ? 'bg-amber-50 text-main font-bold'
-            : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
-        ]"
+        :class="
+          cn([
+            'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors outline-none group',
+            isActive(item.href)
+              ? 'bg-amber-50 text-main font-bold'
+              : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
+          ])
+        "
       >
         <component
           :is="item.icon"
-          :class="[
-            'text-[18px]',
-            isActive(item.href)
-              ? 'text-main'
-              : 'text-zinc-400 group-hover:text-zinc-500',
-          ]"
+          :class="
+            cn([
+              'text-[18px]',
+              isActive(item.href)
+                ? 'text-main'
+                : 'text-zinc-400 group-hover:text-zinc-500',
+            ])
+          "
         />
         {{ item.label }}
       </RouterLink>
@@ -65,6 +69,7 @@
 
 <script setup lang="ts">
 import { sellerNavItems } from "@/shared/lib/seller-nav-config";
+import { cn } from "@/shared/lib/utils";
 import { RouterLink, useRoute } from "vue-router";
 const route = useRoute();
 

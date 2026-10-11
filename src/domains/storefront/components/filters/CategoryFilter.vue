@@ -16,16 +16,21 @@
     <p v-else-if="categories.length === 0" class="text-xs text-zinc-400">
       No categories available
     </p>
-    <div v-else class="max-h-48 overflow-y-auto space-y-0.5 pr-1 scrollbar-thin">
+    <div
+      v-else
+      class="max-h-48 overflow-y-auto space-y-0.5 pr-1 scrollbar-thin"
+    >
       <button
         @click="$emit('select', undefined)"
         :aria-pressed="!selected"
-        :class="[
-          'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
-          !selected
-            ? 'bg-main text-main-subtle font-medium'
-            : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
-        ]"
+        :class="
+          cn([
+            'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
+            !selected
+              ? 'bg-main text-main-subtle font-medium'
+              : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
+          ])
+        "
       >
         All Categories
       </button>
@@ -34,12 +39,14 @@
         :key="cat._id"
         @click="$emit('select', selected === cat._id ? undefined : cat._id)"
         :aria-pressed="selected === cat._id"
-        :class="[
-          'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
-          selected === cat._id
-            ? 'bg-main text-main-subtle font-medium'
-            : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
-        ]"
+        :class="
+          cn([
+            'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
+            selected === cat._id
+              ? 'bg-main text-main-subtle font-medium'
+              : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
+          ])
+        "
       >
         {{ cat.name }}
       </button>
@@ -50,6 +57,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Tag } from "lucide-vue-next";
+import { cn } from "@/shared/lib/utils";
 
 interface FlatCategory {
   _id: string;

@@ -44,19 +44,23 @@
               :key="item.href"
               :to="item.href"
               @click="isMobileMenuOpen = false"
-              :class="[
-                'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors outline-none',
-                isActive(item.href)
-                  ? 'bg-amber-50 text-main font-bold'
-                  : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
-              ]"
+              :class="
+                cn([
+                  'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors outline-none',
+                  isActive(item.href)
+                    ? 'bg-amber-50 text-main font-bold'
+                    : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
+                ])
+              "
             >
               <component
                 :is="item.icon"
-                :class="[
-                  'text-[18px]',
-                  isActive(item.href) ? 'text-main' : 'text-zinc-400',
-                ]"
+                :class="
+                  cn([
+                    'text-[18px]',
+                    isActive(item.href) ? 'text-main' : 'text-zinc-400',
+                  ])
+                "
               />
               {{ item.label }}
             </RouterLink>
@@ -100,6 +104,7 @@ import SheetContent from "@/shared/components/ui/sheet/SheetContent.vue";
 import SheetHeader from "@/shared/components/ui/sheet/SheetHeader.vue";
 import SheetTitle from "@/shared/components/ui/sheet/SheetTitle.vue";
 import AccountMenu from "@/shared/components/buyer/AccountMenu.vue";
+import { cn } from "@/shared/lib/utils";
 
 const route = useRoute();
 const isMobileMenuOpen = ref(false);

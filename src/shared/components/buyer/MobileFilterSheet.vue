@@ -2,10 +2,12 @@
   <div>
     <div
       @click="onClose"
-      :class="[
-        'fixed inset-0 bg-zinc-900/40 backdrop-blur-sm z-40 transition-opacity duration-300',
-        open ? 'opacity-100' : 'opacity-0 pointer-events-none',
-      ]"
+      :class="
+        cn([
+          'fixed inset-0 bg-zinc-900/40 backdrop-blur-sm z-40 transition-opacity duration-300',
+          open ? 'opacity-100' : 'opacity-0 pointer-events-none',
+        ])
+      "
     ></div>
 
     <div
@@ -13,10 +15,12 @@
       role="dialog"
       aria-modal="true"
       aria-label="Filters"
-      :class="[
-        'fixed top-0 right-0 bottom-0 w-[300px] bg-zinc-50 z-50 shadow-2xl transition-transform duration-300 ease-out',
-        open ? 'translate-x-0' : 'translate-x-full',
-      ]"
+      :class="
+        cn([
+          'fixed top-0 right-0 bottom-0 w-[300px] bg-zinc-50 z-50 shadow-2xl transition-transform duration-300 ease-out',
+          open ? 'translate-x-0' : 'translate-x-full',
+        ])
+      "
     >
       <div class="h-full overflow-y-auto p-4">
         <FilterSidebar
@@ -35,6 +39,7 @@
 <script setup lang="ts">
 import type { FiltersState } from "@/domains/storefront/components/filters/FilterSidebar.vue";
 import FilterSidebar from "@/domains/storefront/components/filters/FilterSidebar.vue";
+import { cn } from "@/shared/lib/utils";
 import { onUnmounted, ref, watch } from "vue";
 interface MobileFilterSheetProps {
   open: boolean;

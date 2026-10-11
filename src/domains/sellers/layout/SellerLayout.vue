@@ -7,10 +7,12 @@
         <SellerHeader v-if="!hideLayout" />
 
         <main
-          :class="[
-            'flex-1 overflow-y-auto',
-            hideLayout ? 'p-4' : 'p-4 sm:p-6 lg:p-8',
-          ]"
+          :class="
+            cn([
+              'flex-1 overflow-y-auto',
+              hideLayout ? 'p-4' : 'p-4 sm:p-6 lg:p-8',
+            ])
+          "
         >
           <slot></slot>
         </main>
@@ -24,6 +26,7 @@ import { useRoute } from "vue-router";
 import SellerGuard from "../guard/SellerGuard.vue";
 import SellerSidebar from "../components/layout/SellerSidebar.vue";
 import SellerHeader from "../components/layout/SellerHeader.vue";
+import { cn } from "@/shared/lib/utils/index.ts";
 
 const route = useRoute();
 const isOnboarding = route.path === "/seller/onboarding";

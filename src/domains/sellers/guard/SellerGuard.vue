@@ -73,7 +73,7 @@
 import { useGetMe } from "@/domains/users/hooks/useUser";
 import { useGetMyStore } from "../hooks/useGetMyStore";
 import { useRoute, useRouter } from "vue-router";
-import useLogout from "@/shared/components/hooks/useLogout";
+import useLogout from "@/shared/hooks/useLogout";
 import { computed, watch } from "vue";
 import CustomButton from "@/shared/components/custom-button/CustomButton.vue";
 import { CircleX, LoaderCircle, LogOut } from "lucide-vue-next";

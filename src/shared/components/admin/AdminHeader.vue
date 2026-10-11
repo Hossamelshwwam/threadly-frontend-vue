@@ -48,18 +48,22 @@
               :to="item.href"
               :key="item.href"
               @click="isMobileMenuOpen = false"
-              :class="[
-                'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors outline-none',
-                isActive(item.href)
-                  ? 'bg-amber-50 text-amber-700'
-                  : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
-              ]"
+              :class="
+                cn([
+                  'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors outline-none',
+                  isActive(item.href)
+                    ? 'bg-amber-50 text-amber-700'
+                    : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
+                ])
+              "
             >
               <item.icon
-                :class="[
-                  'text-[18px]',
-                  isActive(item.href) ? 'text-amber-500' : 'text-zinc-400',
-                ]"
+                :class="
+                  cn([
+                    'text-[18px]',
+                    isActive(item.href) ? 'text-amber-500' : 'text-zinc-400',
+                  ])
+                "
               />
               {{ item.label }}
             </RouterLink>
@@ -99,7 +103,7 @@
 import { computed } from "vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../../hooks/useLogout.ts";
 import { adminNavItems } from "@/shared/lib/admin-nav-config";
 import { AtSign, LogOut, Menu } from "lucide-vue-next";
 import Sheet from "../ui/sheet/Sheet.vue";
@@ -108,6 +112,7 @@ import SheetContent from "../ui/sheet/SheetContent.vue";
 import SheetHeader from "../ui/sheet/SheetHeader.vue";
 import SheetTitle from "../ui/sheet/SheetTitle.vue";
 import AccountMenu from "../buyer/AccountMenu.vue";
+import { cn } from "@/shared/lib/utils/index.ts";
 
 const route = useRoute();
 const isMobileMenuOpen = ref(false);

@@ -34,12 +34,14 @@
           v-for="item in adminNavItems"
           :to="item.href"
           :key="item.href"
-          :class="[
-            'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-150 group relative',
-            isActive(item.href)
-              ? 'bg-amber-50 text-amber-700'
-              : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
-          ]"
+          :class="
+            cn([
+              'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-150 group relative',
+              isActive(item.href)
+                ? 'bg-amber-50 text-amber-700'
+                : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
+            ])
+          "
         >
           <span
             v-if="isActive(item.href)"
@@ -48,12 +50,14 @@
 
           <component
             :is="item.icon"
-            :class="[
-              'text-base shrink-0 transition-colors',
-              isActive(item.href)
-                ? 'text-amber-500'
-                : 'text-zinc-400 group-hover:text-zinc-600',
-            ]"
+            :class="
+              cn([
+                'text-base shrink-0 transition-colors',
+                isActive(item.href)
+                  ? 'text-amber-500'
+                  : 'text-zinc-400 group-hover:text-zinc-600',
+              ])
+            "
           />
 
           <span class="flex-1">{{ item.label }}</span>
@@ -70,11 +74,13 @@
         <RouterLink
           key="back to home"
           to="/"
-          :class="[
-            'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-150 group relative',
+          :class="
+            cn([
+              'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-150 group relative',
 
-            'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
-          ]"
+              'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900',
+            ])
+          "
         >
           <ArrowLeft
             class="text-zinc-400 group-hover:text-zinc-600 text-base shrink-0 transition-colors"
@@ -101,9 +107,10 @@
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../../hooks/useLogout";
 import { adminNavItems } from "@/shared/lib/admin-nav-config";
 import { ArrowLeft, AtSign, LogOut } from "lucide-vue-next";
+import { cn } from "@/shared/lib/utils";
 
 interface AdminSidebarProps {
   pendingSellers?: number;

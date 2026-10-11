@@ -118,7 +118,7 @@ import DropdownMenuSeparator from "../ui/dropdown-menu/DropdownMenuSeparator.vue
 import DropdownMenuItem from "../ui/dropdown-menu/DropdownMenuItem.vue";
 import CustomAvatar from "../custom-avatar/CustomAvatar.vue";
 import { useGetMe } from "@/domains/users/hooks/useUser.ts";
-import useLogout from "../hooks/useLogout.ts";
+import useLogout from "../../hooks/useLogout.ts";
 
 interface AccountUser {
   name: string;

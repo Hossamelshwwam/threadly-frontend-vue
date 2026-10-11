@@ -12,12 +12,14 @@
         :key="opt.value"
         @click="$emit('change', value === opt.value ? undefined : opt.value)"
         :aria-pressed="value === opt.value"
-        :class="[
-          'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
-          value === opt.value
-            ? 'bg-main text-main-subtle font-medium'
-            : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
-        ]"
+        :class="
+          cn([
+            'w-full text-left text-sm px-3 py-2 rounded-lg transition-colors',
+            value === opt.value
+              ? 'bg-main text-main-subtle font-medium'
+              : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50',
+          ])
+        "
       >
         {{ opt.label }}
       </button>
@@ -26,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { cn } from "@/shared/lib/utils";
 import { ArrowUpDown } from "lucide-vue-next";
 
 const SORT_OPTIONS = [
