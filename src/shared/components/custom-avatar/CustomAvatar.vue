@@ -2,11 +2,13 @@
   <Avatar :class="class">
     <AvatarImage :src="img || ''" :alt="fallback" />
     <AvatarFallback
-      :class="[
-        'bg-main text-white border-2 border-main-warm',
-        loading && 'animate-spin',
-        fallbackClass,
-      ]"
+      :class="
+        cn([
+          'bg-main text-white border-2 border-main-warm',
+          loading && 'animate-spin',
+          fallbackClass,
+        ])
+      "
     >
       <span
         v-if="loading"
@@ -18,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { cn } from "@/shared/lib/utils/index.ts";
 import Avatar from "../ui/avatar/Avatar.vue";
 import AvatarFallback from "../ui/avatar/AvatarFallback.vue";
 import AvatarImage from "../ui/avatar/AvatarImage.vue";
