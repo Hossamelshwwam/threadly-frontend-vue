@@ -6,7 +6,7 @@ export const createProductSchema = z.object({
   categoryId: z.string().min(1, "Category is required"),
   sellerId: z.string().optional(),
   basePrice: z.number().min(0, "Base price must be a positive number"),
-  status: z.enum(["draft", "active", "archived"]).nonoptional(),
+  status: z.enum(["draft", "active", "archived"]),
   attributes: z
     .array(z.object({ key: z.string().min(1), value: z.string().min(1) }))
     .optional(),

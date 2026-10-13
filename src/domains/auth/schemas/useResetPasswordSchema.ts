@@ -3,10 +3,10 @@ import z from "zod";
 const useResetPasswordSchema = z
   .object({
     password: z
-      .string("Password is required")
+      .string({ message: "Password is required" })
       .min(8, "At least 8 characters")
       .regex(/\d/, "Must contain at least one number"),
-    confirmPassword: z.string("Confirm password is required"),
+    confirmPassword: z.string({ message: "Confirm password is required" }),
   })
   .refine((d) => d.password === d.confirmPassword, {
     message: "Passwords don't match",
