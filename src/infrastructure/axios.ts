@@ -31,9 +31,9 @@ api.interceptors.response.use(
     const url = originalRequest.url || "";
 
     const isAuthRoute =
-      url.includes("/auth/login") ||
-      url.includes("/auth/register") ||
-      url.includes("/auth/refresh") ||
+      url.includes("/login") ||
+      url.includes("/register") ||
+      url.includes("/refresh") ||
       url.includes("/cart") ||
       url.includes("/users/me");
     if (
