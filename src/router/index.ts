@@ -13,6 +13,11 @@ const router = createRouter({
           name: "home",
           component: () => import("@/domains/storefront/pages/HomePage.vue"),
         },
+        {
+          path: "products",
+          name: "products",
+          component: () => import("@/domains/products/pages/ProductsPage.vue"),
+        },
       ],
     },
     {
