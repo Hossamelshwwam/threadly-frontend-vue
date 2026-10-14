@@ -128,7 +128,7 @@ const {
   hasVariants,
   setSelectedColor,
   setSelectedSize,
-} = useVariantSelection(variants.value, basePrice.value);
+} = useVariantSelection(variants, basePrice);
 
 const productId = computed(() => product.value?._id ?? "");
 const { data: reviewsData } = useProductReviews(productId, { limit: 5 });
