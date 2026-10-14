@@ -58,6 +58,7 @@
 import { ref } from "vue";
 import { Tag } from "lucide-vue-next";
 import { cn } from "@/shared/lib/utils";
+import { useCategoriesFlat } from "../../hooks/useCategoriesFlat";
 
 interface FlatCategory {
   _id: string;
@@ -72,10 +73,7 @@ defineEmits<{
   (e: "select", value: string | undefined): void;
 }>();
 
-// TODO: replace with `const { categories, isLoading } = useCategoriesFlat()`
-// once src/domains/storefront/hooks/useCategoriesFlat is migrated.
-const categories = ref<FlatCategory[]>([]);
-const isLoading = ref(false);
+const { categories, isLoading } = useCategoriesFlat();
 </script>
 
 <style scoped></style>
