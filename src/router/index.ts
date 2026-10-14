@@ -1,13 +1,3 @@
-import AuthLayout from "@/domains/auth/components/layout/AuthLayout.vue";
-import ForgotPasswordPage from "@/domains/auth/pages/forgot-password-page.vue";
-import LoginPage from "@/domains/auth/pages/login-page.vue";
-import RegisterPage from "@/domains/auth/pages/register-page.vue";
-import ResetPasswordPage from "@/domains/auth/pages/reset-password-page.vue";
-import VerifyEmailPage from "@/domains/auth/pages/verify-email-page.vue";
-import SellerLayout from "@/domains/sellers/layout/SellerLayout.vue";
-import StoreFrontLayout from "@/domains/storefront/layout/StoreFrontLayout.vue";
-import HomePage from "@/domains/storefront/pages/HomePage.vue";
-import AdminLayout from "@/shared/components/admin/AdminLayout.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -15,73 +5,71 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "store-front",
-      component: StoreFrontLayout,
+      component: () =>
+        import("@/domains/storefront/layout/StoreFrontLayout.vue"),
       children: [
         {
           path: "",
-          component: HomePage,
           name: "home",
+          component: () => import("@/domains/storefront/pages/HomePage.vue"),
         },
       ],
     },
     {
       path: "/seller",
-      name: "seller-layout",
-      component: SellerLayout,
+      component: () => import("@/domains/sellers/layout/SellerLayout.vue"),
       children: [
         {
           path: "",
-          component: HomePage,
-          name: "home",
+          name: "seller-home",
+          // placeholder: replace with a real seller dashboard page
+          component: () => import("@/domains/storefront/pages/HomePage.vue"),
         },
       ],
     },
     {
       path: "/admin",
-      name: "admin-layout",
-      component: AdminLayout,
+      component: () => import("@/shared/components/admin/AdminLayout.vue"),
       children: [
         {
           path: "",
-          component: HomePage,
-          name: "home",
+          name: "admin-home",
+          // placeholder: replace with a real admin dashboard page
+          component: () => import("@/domains/storefront/pages/HomePage.vue"),
         },
       ],
     },
     {
-      path: "",
-      name: "auth-layout",
-      component: AuthLayout,
+      path: "/",
+      component: () =>
+        import("@/domains/auth/components/layout/AuthLayout.vue"),
       children: [
         {
-          path: "",
-          redirect: { name: "login-page" },
-        },
-        {
           path: "login",
-          component: LoginPage,
           name: "login-page",
+          component: () => import("@/domains/auth/pages/login-page.vue"),
         },
         {
           path: "register",
-          component: RegisterPage,
           name: "register-page",
+          component: () => import("@/domains/auth/pages/register-page.vue"),
         },
         {
           path: "verify-email",
-          component: VerifyEmailPage,
           name: "verify-email-page",
+          component: () => import("@/domains/auth/pages/verify-email-page.vue"),
         },
         {
           path: "reset-password",
-          component: ResetPasswordPage,
           name: "reset-password-page",
+          component: () =>
+            import("@/domains/auth/pages/reset-password-page.vue"),
         },
         {
           path: "forgot-password",
-          component: ForgotPasswordPage,
           name: "forgot-password-page",
+          component: () =>
+            import("@/domains/auth/pages/forgot-password-page.vue"),
         },
       ],
     },
