@@ -1,6 +1,6 @@
 import type { ProductVariant } from "@/domains/products/types/inventory.types";
 import type { VariantSelection } from "@/domains/storefront/types/variant-selection.types";
-import { computed, ref } from "vue";
+import { computed, ref, type MaybeRef } from "vue";
 
 export function useVariantSelection(
   variants: ProductVariant[],
@@ -27,6 +27,14 @@ export function useVariantSelection(
       : Math.max(...variants.map((v) => v.stock - v.reserved), 0),
   );
 
+  function setSelectedColor(color: string | undefined) {
+    selectedColor.value = color;
+  }
+
+  function setSelectedSize(size: string | undefined) {
+    selectedSize.value = size;
+  }
+
   return {
     selectedColor: selectedColor.value,
     selectedSize: selectedSize.value,
@@ -34,5 +42,7 @@ export function useVariantSelection(
     displayPrice: displayPrice.value,
     maxStock: maxStock.value,
     hasVariants,
+    setSelectedColor,
+    setSelectedSize,
   };
 }

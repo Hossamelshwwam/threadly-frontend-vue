@@ -7,4 +7,6 @@ export interface VariantSelection {
   displayPrice: number;
   maxStock: number;
   hasVariants: boolean;
+  setSelectedColor: (color: string | undefined) => void;
+  setSelectedSize: (size: string | undefined) => void;
 }

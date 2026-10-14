@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRef } from "vue";
 import { publicProductsApi } from "../api/public-products.api";
 
 export const productDetailKeys = {
@@ -6,10 +7,10 @@ export const productDetailKeys = {
   bySlug: (slug: string) => [...productDetailKeys.all, slug] as const,
 };
 
-export function useProductDetail(slug: string) {
+export function useProductDetail(slug: MaybeRef<string>) {
   return useQuery({
-    queryKey: productDetailKeys.bySlug(slug),
-    queryFn: () => publicProductsApi.getProductBySlug(slug),
-    enabled: !!slug,
+    queryKey: computed(() => productDetailKeys.bySlug(toValue(slug))),
+    queryFn: () => publicProductsApi.getProductBySlug(toValue(slug)),
+    enabled: computed(() => !!toValue(slug)),
   });
 }

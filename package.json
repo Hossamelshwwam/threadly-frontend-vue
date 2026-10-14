@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@fancyapps/ui": "^6.1.15",
     "@lucide/vue": "^1.55.0",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/vue-query": "^5.104.0",
