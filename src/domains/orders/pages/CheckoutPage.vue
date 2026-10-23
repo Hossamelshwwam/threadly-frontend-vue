@@ -1,5 +1,8 @@
 <template>
-  <div v-if="isCartLoading || isAddressLoading" class="py-32 text-center text-zinc-500 font-sans">
+  <div
+    v-if="isCartLoading || isAddressLoading"
+    class="py-32 text-center text-zinc-500 font-sans"
+  >
     Preparing secure checkout...
   </div>
 
@@ -91,8 +94,7 @@ const selectMethod = ref<"credit_card" | "cash_on_delivery">(
 const router = useRouter();
 
 const { data: cartResponse, isLoading: isCartLoading } = useCart();
-const { data: addressResponse, isLoading: isAddressLoading } =
-  useMyAddresses();
+const { data: addressResponse, isLoading: isAddressLoading } = useMyAddresses();
 const { mutateAsync: placeOrderAsync, isPending } = usePlaceOrder();
 
 const cart = computed(() => cartResponse.value?.data);
