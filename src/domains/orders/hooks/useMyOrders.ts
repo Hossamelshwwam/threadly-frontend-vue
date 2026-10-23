@@ -16,11 +16,11 @@ export function useMyOrders(params: MaybeRefOrGetter<OrdersParams>) {
   });
 }
 
-export function useBuyerOrder(id: string) {
+export function useBuyerOrder(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: ["my-orders", "detail", id],
-    queryFn: () => buyerOrdersApi.getBuyerOrder(id),
-    enabled: !!id,
+    queryKey: computed(() => ["my-orders", "detail", toValue(id)]),
+    queryFn: () => buyerOrdersApi.getBuyerOrder(toValue(id)),
+    enabled: !!toValue(id),
   });
 }
 
