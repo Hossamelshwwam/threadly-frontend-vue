@@ -64,8 +64,6 @@ const onSubmit = handleSubmit(async (values: LoginSchemaType) => {
   toast.promise(promise, {
     loading: "Signing in...",
     success: (data: LoginResult) => {
-      console.log(data);
-
       router.push((route.query.redirect as string) || "/");
       return `Welcome back, ${data.data.user.name}!`;
     },
