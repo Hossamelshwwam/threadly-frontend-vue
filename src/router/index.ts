@@ -46,6 +46,19 @@ const router = createRouter({
           component: () =>
             import("@/domains/orders/pages/OrderConfirmationPage.vue"),
         },
+        {
+          path: "account",
+          component: () =>
+            import("@/domains/users/components/layout/AccountLayout.vue"),
+          children: [
+            {
+              path: "",
+              name: "account-profile",
+              component: () =>
+                import("@/domains/users/pages/AccountProfilePage.vue"),
+            },
+          ],
+        },
       ],
     },
     {
