@@ -1,36 +1,25 @@
 import { useQuery } from "@tanstack/vue-query";
+import { computed } from "vue";
 import { cartApi } from "../api/cart.api";
-import type { Cart, CartResponse } from "../types/cart.types";
 
 export const cartKeys = {
   all: ["cart"] as const,
 };
 
-interface UseCartResult {
-  data: CartResponse | undefined;
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-  itemCount: number;
-  totalPrice: number;
-}
-
-export default function useCart(): UseCartResult {
+export default function useCart() {
   const query = useQuery({
     queryKey: cartKeys.all,
     queryFn: () => cartApi.getCart(),
   });
 
-  const cart: Cart | undefined = query.data.value?.data;
-
-  const itemCount = cart?.itemCount ?? 0;
-  const totalPrice = cart?.total ?? 0;
+  const itemCount = computed(() => query.data.value?.data?.itemCount ?? 0);
+  const totalPrice = computed(() => query.data.value?.data?.total ?? 0);
 
   return {
-    data: query.data.value,
-    isLoading: query.isLoading.value,
-    isError: query.isError.value,
-    error: query.error.value,
+    data: query.data,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
     itemCount,
     totalPrice,
   };
