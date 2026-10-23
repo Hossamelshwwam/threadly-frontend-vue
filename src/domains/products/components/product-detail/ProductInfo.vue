@@ -8,8 +8,16 @@
       >
         {{ categoryName }}
       </span>
+      <RouterLink
+        v-if="sellerName && sellerSlug"
+        :to="`/stores/${sellerSlug}`"
+        class="flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white"
+      >
+        <Store :size="14" class="text-amber-400" />
+        {{ sellerName }}
+      </RouterLink>
       <span
-        v-if="sellerName"
+        v-else-if="sellerName"
         class="flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white"
       >
         <Store :size="14" class="text-amber-400" />
@@ -106,6 +114,11 @@ const categoryName = computed(() =>
 const sellerName = computed(() =>
   typeof props.product.sellerId === "object" && props.product.sellerId !== null
     ? props.product.sellerId.storeName
+    : undefined,
+);
+const sellerSlug = computed(() =>
+  typeof props.product.sellerId === "object" && props.product.sellerId !== null
+    ? props.product.sellerId.storeSlug
     : undefined,
 );
 const hasDiscount = computed(() => props.displayPrice !== props.basePrice);

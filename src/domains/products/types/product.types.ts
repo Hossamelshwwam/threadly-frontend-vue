@@ -11,7 +11,7 @@ export interface Product {
   slug: string;
   description: string;
   categoryId: string | { _id: string; name: string };
-  sellerId?: string | { _id: string; storeName: string };
+  sellerId?: string | { _id: string; storeName: string; storeSlug?: string };
   basePrice: number;
   status: ProductStatus;
   attributes: ProductAttribute[];

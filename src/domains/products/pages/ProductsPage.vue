@@ -64,9 +64,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute, useRouter, type LocationQuery } from "vue-router";
 import { ListFilter } from "lucide-vue-next";
 import { useInfinitePublicProducts } from "@/domains/products/hooks/useInfinitePublicProducts";
+import { useCategoriesFlat } from "@/domains/storefront/hooks/useCategoriesFlat";
 import FilterSidebar, {
   type FiltersState,
 } from "@/domains/storefront/components/filters/FilterSidebar.vue";
@@ -74,6 +76,18 @@ import ProductsGrid from "@/domains/products/components/ProductsGrid.vue";
 import MobileFilterSheet from "@/shared/components/buyer/MobileFilterSheet.vue";
 
 const DEFAULT_FILTERS: FiltersState = {};
+
+const QUERY_KEYS = [
+  "category",
+  "search",
+  "sort",
+  "minPrice",
+  "maxPrice",
+] as const;
+
+const route = useRoute();
+const router = useRouter();
+const { categories } = useCategoriesFlat();
 
 const appliedFilters = ref<FiltersState>({ ...DEFAULT_FILTERS });
 const draftFilters = ref<FiltersState>({ ...DEFAULT_FILTERS });
@@ -112,13 +126,55 @@ function handleFilterChange(key: string, value: string | undefined) {
   draftFilters.value = { ...draftFilters.value, [key]: value };
 }
 
+// Home page category cards link to /products?category=<slug>, while the filter
+// sidebar works with category ids — normalize both to an id.
+function filtersFromQuery(query: LocationQuery): FiltersState {
+  const next: FiltersState = {};
+  for (const key of QUERY_KEYS) {
+    const raw = query[key];
+    const value = Array.isArray(raw) ? raw[0] : raw;
+    if (typeof value === "string" && value !== "") next[key] = value;
+  }
+
+  if (next.category) {
+    const match = categories.value.find(
+      (category) =>
+        category.slug === next.category || category._id === next.category,
+    );
+    if (match) next.category = match._id;
+  }
+
+  return next;
+}
+
+function syncQuery() {
+  const query: Record<string, string> = {};
+  for (const key of QUERY_KEYS) {
+    const value = appliedFilters.value[key];
+    if (value !== undefined && value !== "") query[key] = String(value);
+  }
+  router.replace({ query });
+}
+
+watch(
+  [() => route.query, categories],
+  ([query]) => {
+    const next = filtersFromQuery(query);
+    appliedFilters.value = next;
+    draftFilters.value = { ...next };
+  },
+  { immediate: true },
+);
+
 function handleApply() {
   appliedFilters.value = { ...draftFilters.value };
+  syncQuery();
 }
 
 function handleReset() {
   draftFilters.value = { ...DEFAULT_FILTERS };
   appliedFilters.value = { ...DEFAULT_FILTERS };
+  syncQuery();
 }
 
 function toggleWishlist(productId: string) {
