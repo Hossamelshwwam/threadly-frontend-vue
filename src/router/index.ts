@@ -63,6 +63,12 @@ const router = createRouter({
               component: () =>
                 import("@/domains/users/pages/AccountAddressesPage.vue"),
             },
+            {
+              path: "security",
+              name: "account-security",
+              component: () =>
+                import("@/domains/users/pages/AccountSecurityPage.vue"),
+            },
           ],
         },
       ],
