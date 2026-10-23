@@ -4,13 +4,14 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { buyerOrdersApi } from "../api/orders.api";
 import type { OrdersParams } from "../types/order.types";
 
-export function useMyOrders(params: OrdersParams) {
+export function useMyOrders(params: MaybeRefOrGetter<OrdersParams>) {
   return useQuery({
-    queryKey: ["my-orders", params],
-    queryFn: () => buyerOrdersApi.getMyOrders(params),
+    queryKey: computed(() => ["my-orders", toValue(params)]),
+    queryFn: () => buyerOrdersApi.getMyOrders(toValue(params)),
     placeholderData: keepPreviousData,
   });
 }

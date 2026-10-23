@@ -67,6 +67,7 @@ export interface Order {
   shippingAddress: ShippingAddress;
   paymentStatus: PaymentStatus;
   paymentMethod: PaymentMethod;
+  itemCount?: number;
   createdAt: string;
   updatedAt: string;
 }

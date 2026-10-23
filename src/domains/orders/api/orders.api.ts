@@ -58,7 +58,7 @@ export const ordersApi = {
 export const buyerOrdersApi = {
   getMyOrders: async (
     params?: OrdersParams,
-  ): Promise<PaginatedApiResponse<Order[]>> => {
+  ): Promise<PaginatedApiResponse<Order>> => {
     const cleanParams = { ...params };
     Object.keys(cleanParams).forEach((key) => {
       if (cleanParams[key as keyof OrdersParams] === "") {
