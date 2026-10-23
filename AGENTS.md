@@ -29,6 +29,24 @@ Learning-driven React (Next.js) → Vue 3 migration. Preserve styles exactly; tr
    - SFC order in this repo: `<template>` then `<script setup lang="ts">`. `defineProps<T>()` — do not destructure without `toRefs` (loses reactivity); access via `props.x` or keep the known-good shadcn pattern (`reactiveOmit` + `useForwardProps`, see `ui/dropdown-menu/DropdownMenuItem.vue`).
    - Reka `asChild` pattern: `<DropdownMenuItem asChild><RouterLink .../></DropdownMenuItem>` — keep `asChild`, do not nest extra `<a>`.
 
+## Conventions (reuse on every file)
+
+### Typing `toast.promise` callbacks (vue-sonner)
+
+`toast.promise` declares `success`/`error` as unions of function types, so TS cannot contextually type their parameters — you get `TS7006: Parameter 'x' implicitly has an 'any' type`. Annotate both:
+
+- **`success`: derive from the API method, never re-declare the response shape.**
+  ```ts
+  import type { authApi } from "../../api/auth.api";
+  type LoginResult = Awaited<ReturnType<typeof authApi.login>>;
+  // ...
+  success: (data: LoginResult) => { /* ... */ }
+  ```
+  Do not inline `ApiResponse<{ ... }>` at the call site: it duplicates the contract and drifts silently when the API changes. Deriving only works if the api method has an explicit return type — if it returns bare `res.data` (→ `any`), fix the API signature first.
+- **`error`:** `(error: AxiosError<{ message: string }>) => error.response?.data.message || "<fallback>"`.
+- `toast.promise` returns a **toast id**, not the promise (unlike React sonner) — do not chain `.catch()` on it.
+- Canonical examples: `auth/components/login/LoginForm.vue`, `orders/pages/CheckoutPage.vue`.
+
 ## Gotchas (verified in tree)
 
 - `cn()` lives at `src/shared/lib/utils/index.ts`, imported as `@/shared/lib/utils` (matches `components.json` + every `ui/` file). `src/lib/utils.ts` is a leftover duplicate — do not import it, do not create a third copy.
