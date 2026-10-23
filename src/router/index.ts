@@ -40,6 +40,12 @@ const router = createRouter({
           name: "checkout",
           component: () => import("@/domains/orders/pages/CheckoutPage.vue"),
         },
+        {
+          path: "orders/:id/confirmation",
+          name: "order-confirmation",
+          component: () =>
+            import("@/domains/orders/pages/OrderConfirmationPage.vue"),
+        },
       ],
     },
     {
