@@ -57,6 +57,12 @@ const router = createRouter({
               component: () =>
                 import("@/domains/users/pages/AccountProfilePage.vue"),
             },
+            {
+              path: "addresses",
+              name: "account-addresses",
+              component: () =>
+                import("@/domains/users/pages/AccountAddressesPage.vue"),
+            },
           ],
         },
       ],
