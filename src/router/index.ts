@@ -24,6 +24,12 @@ const router = createRouter({
           component: () =>
             import("@/domains/products/pages/ProductDetailPage.vue"),
         },
+        {
+          path: "stores/:slug",
+          name: "store",
+          component: () =>
+            import("@/domains/storefront/pages/StorefrontPage.vue"),
+        },
       ],
     },
     {
