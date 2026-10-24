@@ -90,6 +90,13 @@ const router = createRouter({
                   "@/domains/reviews/pages/AccountPendingReviewsPage.vue"
                 ),
             },
+            {
+              path: "reviews/write/:orderItemId",
+              name: "account-write-review",
+              component: () =>
+                import("@/domains/reviews/pages/AccountWriteReviewPage.vue"),
+              props: true,
+            },
           ],
         },
       ],

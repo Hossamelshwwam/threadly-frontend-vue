@@ -90,5 +90,5 @@ export interface PendingReviewItem {
   sellerId?: {
     _id: string;
     storeName?: string;
-  };
+  } | null;
 }
