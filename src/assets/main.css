@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap");
 
 @import "./base.css";
 @import "tailwindcss";
@@ -122,5 +121,45 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset for the fixed 80px (h-20) navbar on #anchor jumps */
+  scroll-padding-top: 5rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+select::picker-icon {
+  display: none;
+}
+
+::picker(select) {
+  border-radius: 8px;
+  border: 2px solid var(--color-main);
+}
+
+::selection {
+  color: var(--color-on-main);
+  background-color: var(--color-main);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
