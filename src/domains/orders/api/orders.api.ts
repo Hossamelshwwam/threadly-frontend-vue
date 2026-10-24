@@ -81,7 +81,7 @@ export const buyerOrdersApi = {
     return data;
   },
 
-  getPendingReviews: async () => {
+  getPendingReviews: async (): Promise<ApiResponse<OrderItem[]>> => {
     const { data } = await api.get("/orders/pending-reviews");
     return data;
   },

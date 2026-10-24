@@ -82,6 +82,14 @@ const router = createRouter({
                 import("@/domains/orders/pages/AccountOrderDetailPage.vue"),
               props: true,
             },
+            {
+              path: "reviews/pending",
+              name: "account-pending-reviews",
+              component: () =>
+                import(
+                  "@/domains/reviews/pages/AccountPendingReviewsPage.vue"
+                ),
+            },
           ],
         },
       ],
