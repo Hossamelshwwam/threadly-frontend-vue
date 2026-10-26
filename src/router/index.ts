@@ -123,6 +123,12 @@ const router = createRouter({
           component: () =>
             import("@/domains/sellers/pages/SellerPendingApprovalPage.vue"),
         },
+        {
+          path: "profile",
+          name: "seller-profile",
+          component: () =>
+            import("@/domains/sellers/pages/SellerProfilePage.vue"),
+        },
       ],
     },
     {
