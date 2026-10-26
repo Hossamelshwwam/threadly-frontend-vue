@@ -13,7 +13,7 @@
       <!-- Don't render anything -->
     </template>
     <div
-      v-else-if="hasStore && storeStatus === 'suspended'"
+      v-else-if="hasStore && storeStatus !== 'pending' && !isApproved"
       class="h-screen w-full flex items-center justify-center bg-zinc-50 p-4 font-sans"
     >
       <div
@@ -90,6 +90,9 @@ const isLoading = computed(() => isStoreLoading.value || isUserLoading.value);
 const hasStore = computed(() => !!storeData.value?.data);
 const storeStatus = computed(() => storeData.value?.data?.status);
 const isBuyer = computed(() => userData.value?.data?.role === "buyer");
+// Only an approved store may render the seller pages; `pending` goes to the
+// approval gate and `suspended` (or anything else) stays on the blocked screen.
+const isApproved = computed(() => storeStatus.value === "approved");
 
 const isOnboarding = computed(() => route.path === "/seller/onboarding");
 const isPendingApproval = computed(
