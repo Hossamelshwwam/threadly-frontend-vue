@@ -111,6 +111,12 @@ const router = createRouter({
           // placeholder: replace with a real seller dashboard page
           component: () => import("@/domains/storefront/pages/HomePage.vue"),
         },
+        {
+          path: "onboarding",
+          name: "seller-onboarding",
+          component: () =>
+            import("@/domains/sellers/pages/SellerOnboardingPage.vue"),
+        },
       ],
     },
     {

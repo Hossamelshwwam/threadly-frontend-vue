@@ -14,7 +14,7 @@
             ])
           "
         >
-          <slot></slot>
+          <RouterView />
         </main>
       </div>
     </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SellerGuard from "../guard/SellerGuard.vue";
 import SellerSidebar from "../components/layout/SellerSidebar.vue";
@@ -29,9 +30,11 @@ import SellerHeader from "../components/layout/SellerHeader.vue";
 import { cn } from "@/shared/lib/utils/index.ts";
 
 const route = useRoute();
-const isOnboarding = route.path === "/seller/onboarding";
-const isPendingApproval = route.path === "/seller/pending-approval";
-const hideLayout = isOnboarding || isPendingApproval;
+const hideLayout = computed(
+  () =>
+    route.path === "/seller/onboarding" ||
+    route.path === "/seller/pending-approval",
+);
 </script>
 
 <style scoped></style>

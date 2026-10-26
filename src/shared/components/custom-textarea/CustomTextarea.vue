@@ -3,7 +3,6 @@
     :class="
       cn([
         'relative flex-1 font-sans',
-        classname,
         half ? 'col-span-2 lg:col-span-1' : 'col-span-2',
       ])
     "
@@ -22,15 +21,25 @@
     </label>
 
     <div class="relative">
+      <component
+        v-if="Icon"
+        :is="Icon"
+        :class="
+          cn([
+            'absolute top-4 inset-s-4 text-xl text-on-surface-muted pointer-events-none',
+            IconClass,
+          ])
+        "
+      />
+
       <textarea
         :id="name"
         :name="name"
         :placeholder="placeholder"
-        :max-length="maxLength"
+        :maxlength="maxlength"
         :disabled="disabled"
         :rows="rows"
-        :autoFocus="autoFocus"
-        v-bind="textareaAttrs"
+        :autofocus="autofocus"
         v-model="value"
         :class="
           cn([
@@ -38,40 +47,49 @@
             error
               ? 'border-error focus:ring-2 focus:ring-error/20 focus:border-error'
               : 'border-border focus:ring-2 focus:ring-border-focus focus:border-border-focus',
+            Icon && 'ps-11',
             disabled && 'opacity-60 cursor-not-allowed',
             resize === 'none' && 'resize-none',
             resize === 'both' && 'resize',
             resize === 'horizontal' && 'resize-x',
             resize === 'vertical' && 'resize-y',
-            TextareaClass,
+            textareaClass,
           ])
         "
       ></textarea>
     </div>
+
+    <p v-if="error" class="text-error text-xs font-medium mt-1.5">
+      {{ error }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { cn } from "@/shared/lib/utils";
+import type { Component } from "vue";
 
 interface Props {
-  textareaAttrs: Record<string, unknown>;
   name: string;
   label?: string;
   placeholder?: string;
   half?: boolean;
   disabled?: boolean;
-  TextareaClass?: string;
+  textareaClass?: string;
   labelClass?: string;
-  classname?: string;
+  IconClass?: string;
   error?: string;
-  maxLength?: number;
+  maxlength?: number;
   rows?: number;
-  autoFocus?: boolean;
+  autofocus?: boolean;
+  Icon?: Component;
   resize?: "none" | "both" | "horizontal" | "vertical";
 }
 
 const value = defineModel<string>();
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  rows: 4,
+  resize: "none",
+});
 </script>
