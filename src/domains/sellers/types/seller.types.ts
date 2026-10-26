@@ -39,3 +39,11 @@ export interface AdminSellersResponse {
     pages: number;
   };
 }
+
+export interface RegisterStorePayload {
+  storeName: string;
+  description?: string;
+  bankName: string;
+  accountName: string;
+  accountNumber: string;
+}

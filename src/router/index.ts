@@ -117,6 +117,12 @@ const router = createRouter({
           component: () =>
             import("@/domains/sellers/pages/SellerOnboardingPage.vue"),
         },
+        {
+          path: "pending-approval",
+          name: "seller-pending-approval",
+          component: () =>
+            import("@/domains/sellers/pages/SellerPendingApprovalPage.vue"),
+        },
       ],
     },
     {

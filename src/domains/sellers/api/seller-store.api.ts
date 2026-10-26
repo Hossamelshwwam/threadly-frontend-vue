@@ -1,17 +1,11 @@
 import type { ApiResponse } from "@/shared/types/api.types";
-import type { SellerProfile } from "../types/seller.types";
+import type {
+  RegisterStorePayload,
+  SellerProfile,
+} from "../types/seller.types";
 import { api } from "@/infrastructure/axios";
 
 // Payload for when a user registers to become a seller
-export interface RegisterStorePayload {
-  storeName: string;
-  description?: string;
-  bankDetails?: {
-    bankName: string;
-    accountName: string;
-    accountNumber: string;
-  };
-}
 
 export const sellerStoreApi = {
   // 1. Get the current logged-in seller's store profile

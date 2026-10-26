@@ -2,9 +2,7 @@
   <form class="flex flex-col gap-6" @submit="onSubmit">
     <!-- Basic Store Info -->
     <div class="space-y-4">
-      <h3
-        class="text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2"
-      >
+      <h3 class="text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2">
         Store Details
       </h3>
 
@@ -105,10 +103,8 @@ import {
   useRegisterStoreSchema,
   type RegisterStoreSchemaType,
 } from "../../schemas/useRegisterStoreSchema";
-import type {
-  RegisterStorePayload,
-  sellerStoreApi,
-} from "../../api/seller-store.api";
+import type { sellerStoreApi } from "../../api/seller-store.api";
+import type { RegisterStorePayload } from "../../types/seller.types";
 
 type RegisterStoreResult = Awaited<
   ReturnType<typeof sellerStoreApi.registerStore>
@@ -135,11 +131,9 @@ const onSubmit = handleSubmit((values: RegisterStoreSchemaType) => {
   const payload: RegisterStorePayload = {
     storeName: values.storeName,
     description: values.description,
-    bankDetails: {
-      bankName: values.bankName,
-      accountName: values.accountName,
-      accountNumber: values.accountNumber,
-    },
+    bankName: values.bankName,
+    accountName: values.accountName,
+    accountNumber: values.accountNumber,
   };
 
   // The hook invalidates ["my-store-profile"] / ["me"] and pushes to /seller.

@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/vue-query";
-import {
-  sellerStoreApi,
-  type RegisterStorePayload,
-} from "../api/seller-store.api";
+import { sellerStoreApi } from "../api/seller-store.api";
+import type { RegisterStorePayload } from "../types/seller.types";
 import { useRouter } from "vue-router";
 
 export function useRegisterStore() {
