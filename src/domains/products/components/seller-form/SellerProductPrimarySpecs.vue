@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useField } from "vee-validate";
 import { Info } from "lucide-vue-next";
 import CustomInput from "@/shared/components/custom-input/CustomInput.vue";
@@ -91,6 +91,23 @@ const { value: categoryId, errorMessage: categoryIdError } =
 // schema (and the submitted payload) sees a number. The raw string is kept
 // separately so partial input like "12." isn't rewritten mid-typing.
 const basePriceInput = ref("");
+
+// Sync the local string when the field value changes from outside (the edit
+// page resetting the form), while leaving in-progress typing untouched.
+watch(
+  basePrice,
+  (value) => {
+    if (typeof value === "number" && Number.isNaN(value)) return;
+
+    const local =
+      basePriceInput.value === "" ? undefined : Number(basePriceInput.value);
+
+    if (value !== local) {
+      basePriceInput.value = typeof value === "number" ? String(value) : "";
+    }
+  },
+  { immediate: true },
+);
 
 const basePriceModel = computed<string | undefined>({
   get: () => basePriceInput.value,

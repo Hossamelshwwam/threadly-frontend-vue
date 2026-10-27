@@ -22,9 +22,10 @@ export function useSellerProducts(
   });
 }
 
-export function useSellerProduct(id: string) {
+export function useSellerProduct(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: sellerProductsKey.sellerDetail(id),
-    queryFn: () => sellerProductsApi.getSellerProduct(id),
+    queryKey: computed(() => sellerProductsKey.sellerDetail(toValue(id))),
+    queryFn: () => sellerProductsApi.getSellerProduct(toValue(id)),
+    enabled: computed(() => !!toValue(id)),
   });
 }
