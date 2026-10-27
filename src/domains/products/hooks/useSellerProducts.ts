@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { sellerProductsApi } from "../api/seller-products.api";
 import type { ProductsParams } from "../types/product.types";
 
@@ -10,10 +11,14 @@ const sellerProductsKey = {
     [...sellerProductsKey.all, "seller", "detail", id] as const,
 };
 
-export function useSellerProducts(params?: ProductsParams) {
+export function useSellerProducts(
+  params?: MaybeRefOrGetter<ProductsParams | undefined>,
+) {
+  const resolveParams = () => (params ? toValue(params) : undefined);
+
   return useQuery({
-    queryKey: sellerProductsKey.sellerList(params),
-    queryFn: () => sellerProductsApi.getSellerProducts(params),
+    queryKey: computed(() => sellerProductsKey.sellerList(resolveParams())),
+    queryFn: () => sellerProductsApi.getSellerProducts(resolveParams()),
   });
 }
 
