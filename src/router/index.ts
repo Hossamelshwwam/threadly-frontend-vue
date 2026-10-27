@@ -148,6 +148,13 @@ const router = createRouter({
             import("@/domains/products/pages/SellerEditProductPage.vue"),
           props: true,
         },
+        {
+          path: "products/:id",
+          name: "seller-product-detail",
+          component: () =>
+            import("@/domains/products/pages/SellerProductDetailPage.vue"),
+          props: true,
+        },
       ],
     },
     {
