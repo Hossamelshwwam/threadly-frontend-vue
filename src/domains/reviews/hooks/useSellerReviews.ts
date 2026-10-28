@@ -1,5 +1,4 @@
-"use client";
-
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { useQuery } from "@tanstack/vue-query";
 import { sellerReviewsApi } from "../api/seller-reviews.api";
 import type { SellerReviewsParams } from "../types/review.types";
@@ -10,9 +9,13 @@ export const sellerReviewKeys = {
     [...sellerReviewKeys.all, "list", params] as const,
 };
 
-export function useSellerReviews(params?: SellerReviewsParams) {
+export function useSellerReviews(
+  params?: MaybeRefOrGetter<SellerReviewsParams | undefined>,
+) {
+  const resolveParams = () => (params ? toValue(params) : undefined);
+
   return useQuery({
-    queryKey: sellerReviewKeys.list(params),
-    queryFn: () => sellerReviewsApi.listSellerReviews(params),
+    queryKey: computed(() => sellerReviewKeys.list(resolveParams())),
+    queryFn: () => sellerReviewsApi.listSellerReviews(resolveParams()),
   });
 }

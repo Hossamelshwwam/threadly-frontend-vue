@@ -168,6 +168,12 @@ const router = createRouter({
             import("@/domains/orders/pages/SellerOrderDetailPage.vue"),
           props: true,
         },
+        {
+          path: "reviews",
+          name: "seller-reviews",
+          component: () =>
+            import("@/domains/reviews/pages/SellerReviewsPage.vue"),
+        },
       ],
     },
     {
