@@ -198,6 +198,11 @@ const router = createRouter({
             import("@/domains/users/pages/AdminUserDetailPage.vue"),
           props: true,
         },
+        {
+          path: "sellers",
+          name: "admin-sellers",
+          component: () => import("@/domains/sellers/pages/AdminSellersPage.vue"),
+        },
       ],
     },
     {
