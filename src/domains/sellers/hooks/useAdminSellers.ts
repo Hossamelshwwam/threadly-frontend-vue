@@ -22,10 +22,10 @@ export function useAdminSellers(
   });
 }
 
-export function useAdminSeller(id: string) {
+export function useAdminSeller(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: sellerKeys.adminDetail(id),
-    queryFn: () => sellersApi.adminGetSeller(id),
-    enabled: !!id,
+    queryKey: computed(() => sellerKeys.adminDetail(toValue(id))),
+    queryFn: () => sellersApi.adminGetSeller(toValue(id)),
+    enabled: computed(() => !!toValue(id)),
   });
 }

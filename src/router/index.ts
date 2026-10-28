@@ -203,6 +203,13 @@ const router = createRouter({
           name: "admin-sellers",
           component: () => import("@/domains/sellers/pages/AdminSellersPage.vue"),
         },
+        {
+          path: "sellers/:id",
+          name: "admin-seller-detail",
+          component: () =>
+            import("@/domains/sellers/pages/AdminSellerDetailPage.vue"),
+          props: true,
+        },
       ],
     },
     {

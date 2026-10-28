@@ -1,3 +1,4 @@
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { productsApi } from "../api/products.api";
 import type { ProductsParams } from "../types/product.types";
@@ -10,10 +11,14 @@ export const productKeys = {
     [...productKeys.all, "admin", "detail", id] as const,
 };
 
-export function useAdminProducts(params?: ProductsParams) {
+export function useAdminProducts(
+  params?: MaybeRefOrGetter<ProductsParams | undefined>,
+) {
+  const resolveParams = () => (params ? toValue(params) : undefined);
+
   return useQuery({
-    queryKey: productKeys.adminList(params),
-    queryFn: () => productsApi.adminListProducts(params),
+    queryKey: computed(() => productKeys.adminList(resolveParams())),
+    queryFn: () => productsApi.adminListProducts(resolveParams()),
   });
 }
 
