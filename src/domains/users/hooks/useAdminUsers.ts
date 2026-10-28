@@ -1,3 +1,4 @@
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { useQuery } from "@tanstack/vue-query";
 import { usersApi } from "../api/users.api";
 import type { AdminUsersParams } from "../types/user.types";
@@ -10,10 +11,14 @@ export const userKeys = {
     [...userKeys.all, "admin", "detail", id] as const,
 };
 
-export function useAdminUsers(params?: AdminUsersParams) {
+export function useAdminUsers(
+  params?: MaybeRefOrGetter<AdminUsersParams | undefined>,
+) {
+  const resolveParams = () => (params ? toValue(params) : undefined);
+
   return useQuery({
-    queryKey: userKeys.adminList(params),
-    queryFn: () => usersApi.adminListUsers(params),
+    queryKey: computed(() => userKeys.adminList(resolveParams())),
+    queryFn: () => usersApi.adminListUsers(resolveParams()),
   });
 }
 
