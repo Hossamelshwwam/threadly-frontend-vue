@@ -23,24 +23,24 @@ export function useSellerOrders(
   });
 }
 
-export function useSellerOrderItem(id: string) {
+export function useSellerOrderItem(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: [...sellerOrdersKeys.all, "detail", id],
-    queryFn: () => sellerOrdersApi.getSellerOrderItem(id),
-    enabled: !!id,
+    queryKey: computed(() => [...sellerOrdersKeys.all, "detail", toValue(id)]),
+    queryFn: () => sellerOrdersApi.getSellerOrderItem(toValue(id)),
+    enabled: computed(() => !!toValue(id)),
   });
 }
 
-export function useUpdateSellerOrderStatus(itemId: string) {
+export function useUpdateSellerOrderStatus(itemId: MaybeRefOrGetter<string>) {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: UpdateOrderItemPayload) =>
-      sellerOrdersApi.updateOrderItemStatus(itemId, payload),
+      sellerOrdersApi.updateOrderItemStatus(toValue(itemId), payload),
     onSuccess: () => {
       // Stream updates: clear both lists and details cache immediately
       queryClient.invalidateQueries({
-        queryKey: [...sellerOrdersKeys.all, "detail", itemId],
+        queryKey: [...sellerOrdersKeys.all, "detail", toValue(itemId)],
       });
       queryClient.invalidateQueries({
         queryKey: [...sellerOrdersKeys.all, "list"],
