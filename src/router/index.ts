@@ -210,6 +210,12 @@ const router = createRouter({
             import("@/domains/sellers/pages/AdminSellerDetailPage.vue"),
           props: true,
         },
+        {
+          path: "products",
+          name: "admin-products",
+          component: () =>
+            import("@/domains/products/pages/AdminProductsPage.vue"),
+        },
       ],
     },
     {
