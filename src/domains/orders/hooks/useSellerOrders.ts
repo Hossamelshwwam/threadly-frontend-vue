@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { sellerOrdersApi } from "../api/seller-orders.api";
 import type {
   OrdersItemsParams,
@@ -11,10 +12,14 @@ export const sellerOrdersKeys = {
     [...sellerOrdersKeys.all, "list", params] as const,
 };
 
-export function useSellerOrders(params?: OrdersItemsParams) {
+export function useSellerOrders(
+  params?: MaybeRefOrGetter<OrdersItemsParams | undefined>,
+) {
+  const resolveParams = () => (params ? toValue(params) : undefined);
+
   return useQuery({
-    queryKey: sellerOrdersKeys.list(params),
-    queryFn: () => sellerOrdersApi.getSellerOrders(params),
+    queryKey: computed(() => sellerOrdersKeys.list(resolveParams())),
+    queryFn: () => sellerOrdersApi.getSellerOrders(resolveParams()),
   });
 }
 
