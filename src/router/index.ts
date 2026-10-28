@@ -183,8 +183,8 @@ const router = createRouter({
         {
           path: "",
           name: "admin-home",
-          // placeholder: replace with a real admin dashboard page
-          component: () => import("@/domains/storefront/pages/HomePage.vue"),
+          component: () =>
+            import("@/shared/components/admin/dashboard/AdminDashboardPage.vue"),
         },
       ],
     },

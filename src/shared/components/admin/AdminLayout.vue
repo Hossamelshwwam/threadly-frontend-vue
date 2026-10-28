@@ -7,7 +7,7 @@
         <AdminHeader />
 
         <main class="flex-1 p-4 sm:p-6 overflow-x-hidden">
-          <slot />
+          <RouterView />
         </main>
       </div>
     </div>
