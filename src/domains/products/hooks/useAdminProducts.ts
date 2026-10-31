@@ -33,10 +33,10 @@ export function useAdminForceArchiveProduct() {
   });
 }
 
-export function useGetProduct(id: string) {
+export function useGetProduct(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: productKeys.adminDetail(id),
-    queryFn: () => productsApi.getProduct(id),
-    enabled: !!id,
+    queryKey: computed(() => productKeys.adminDetail(toValue(id))),
+    queryFn: () => productsApi.getProduct(toValue(id)),
+    enabled: computed(() => !!toValue(id)),
   });
 }

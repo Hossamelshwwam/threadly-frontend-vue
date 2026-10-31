@@ -222,6 +222,13 @@ const router = createRouter({
           component: () =>
             import("@/domains/products/pages/AdminCreateProductPage.vue"),
         },
+        {
+          path: "products/:id",
+          name: "admin-product-detail",
+          component: () =>
+            import("@/domains/products/pages/AdminProductDetailPage.vue"),
+          props: true,
+        },
       ],
     },
     {
