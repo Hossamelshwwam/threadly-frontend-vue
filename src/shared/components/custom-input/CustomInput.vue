@@ -42,7 +42,7 @@
         :disabled="disabled"
         v-model="value"
         :step="step"
-        :minlength="min"
+        :min="min"
         :autofocus="autoFocus"
         :class="
           cn([

@@ -216,6 +216,12 @@ const router = createRouter({
           component: () =>
             import("@/domains/products/pages/AdminProductsPage.vue"),
         },
+        {
+          path: "products/create",
+          name: "admin-product-create",
+          component: () =>
+            import("@/domains/products/pages/AdminCreateProductPage.vue"),
+        },
       ],
     },
     {
