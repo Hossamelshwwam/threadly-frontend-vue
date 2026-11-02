@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { categoriesApi } from "../api/categories.api";
 import type {
   AdminCategoriesQueryParams,
@@ -12,10 +13,16 @@ export const categoryKeys = {
     [...categoryKeys.all, "admin", "list", params] as const,
 };
 
-export function useAdminCategories(params?: AdminCategoriesQueryParams) {
+export function useAdminCategories(
+  params?: MaybeRefOrGetter<AdminCategoriesQueryParams>,
+) {
+  const resolved = computed(() =>
+    params === undefined ? undefined : toValue(params),
+  );
+
   return useQuery({
-    queryKey: categoryKeys.adminList(params),
-    queryFn: () => categoriesApi.adminListFlat(params),
+    queryKey: computed(() => categoryKeys.adminList(resolved.value)),
+    queryFn: () => categoriesApi.adminListFlat(resolved.value),
   });
 }
 

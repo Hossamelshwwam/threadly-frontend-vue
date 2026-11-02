@@ -52,7 +52,7 @@
         <option
           v-if="placeholder"
           value=""
-          class="hover:bg-main! focus:bg-main! py-2 px-2"
+          class="hover:bg-main! focus-visible:bg-main! py-2 px-2"
         >
           {{ placeholder }}
         </option>
@@ -60,7 +60,7 @@
           v-for="opt in options"
           :key="opt.value"
           :value="opt.value"
-          class="hover:bg-main! focus:bg-main! py-2 px-2"
+          class="hover:bg-main! focus-visible:bg-main! py-2 px-2"
         >
           {{ opt.label }}
         </option>
