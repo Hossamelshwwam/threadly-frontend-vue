@@ -4,6 +4,7 @@ import type {
   AdminPayoutsParams,
   AdminUpdatePayoutPayload,
 } from "../types/payout.types";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 
 export const payoutKeys = {
   all: ["payouts"] as const,
@@ -21,10 +22,14 @@ export function useAdminPayoutStats() {
   });
 }
 
-export function useAdminPayouts(params?: AdminPayoutsParams) {
+export function useAdminPayouts(params?: MaybeRefOrGetter<AdminPayoutsParams>) {
+  const resolved = computed(() =>
+    params === undefined ? undefined : toValue(params),
+  );
+
   return useQuery({
-    queryKey: payoutKeys.adminList(params),
-    queryFn: () => payoutsApi.adminListPayouts(params),
+    queryKey: computed(() => payoutKeys.adminList(resolved.value)),
+    queryFn: () => payoutsApi.adminListPayouts(resolved.value),
   });
 }
 

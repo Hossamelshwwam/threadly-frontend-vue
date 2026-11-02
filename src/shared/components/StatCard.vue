@@ -6,9 +6,14 @@
         activeStyle.wrapper,
       )
     "
+    :aria-busy="loading"
   >
     <div class="flex items-start justify-between">
+      <div v-if="loading" class="flex h-4 items-center">
+        <div :class="cn('h-3 w-28 rounded', skeletonBar)" />
+      </div>
       <p
+        v-else
         :class="
           cn('text-xs font-semibold uppercase tracking-widest', activeStyle.label)
         "
@@ -31,7 +36,7 @@
       </span>
     </div>
 
-    <div v-if="loading" class="h-8 w-24 rounded bg-black/5 animate-pulse" />
+    <div v-if="loading" :class="cn('h-8 w-24 rounded', skeletonBar)" />
     <p
       v-else
       :class="cn('text-3xl font-bold leading-none', activeStyle.value)"
@@ -39,8 +44,11 @@
       {{ value }}
     </p>
 
+    <div v-if="loading" class="flex h-4 items-center">
+      <div :class="cn('h-3 w-40 rounded', skeletonBar)" />
+    </div>
     <p
-      v-if="trend"
+      v-else-if="trend"
       :class="
         cn(
           'text-xs font-medium',
@@ -129,4 +137,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const activeStyle = computed(() => styles[props.variant]);
+
+// Shimmer tone follows the card surface: white on the amber brand card,
+// a faint black wash on the light variants.
+const skeletonBar = computed(() =>
+  cn(
+    "animate-pulse",
+    props.variant === "brand" ? "bg-white/30" : "bg-black/5",
+  ),
+);
 </script>
