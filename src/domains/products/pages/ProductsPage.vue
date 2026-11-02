@@ -26,7 +26,7 @@
       </button>
     </div>
 
-    <div class="flex gap-10">
+    <div class="flex lg:gap-10">
       <div class="hidden lg:block">
         <FilterSidebar
           :filters="draftFilters"
@@ -118,8 +118,9 @@ const totalCount = computed(() => data.value?.pages[0]?.pagination.total);
 
 const appliedFilterCount = computed(
   () =>
-    Object.values(appliedFilters.value).filter((v) => v !== undefined && v !== "")
-      .length,
+    Object.values(appliedFilters.value).filter(
+      (v) => v !== undefined && v !== "",
+    ).length,
 );
 
 function handleFilterChange(key: string, value: string | undefined) {
