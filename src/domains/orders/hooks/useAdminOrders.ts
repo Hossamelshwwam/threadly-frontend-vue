@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 import { ordersApi } from "../api/orders.api";
 import type {
   OrdersParams,
@@ -14,10 +15,14 @@ export const orderKeys = {
     [...orderKeys.all, "admin", "detail", id] as const,
 };
 
-export function useAdminOrders(params?: OrdersParams) {
+export function useAdminOrders(params?: MaybeRefOrGetter<OrdersParams>) {
+  const resolved = computed(() =>
+    params === undefined ? undefined : toValue(params),
+  );
+
   return useQuery({
-    queryKey: orderKeys.adminList(params),
-    queryFn: () => ordersApi.adminListOrders(params),
+    queryKey: computed(() => orderKeys.adminList(resolved.value)),
+    queryFn: () => ordersApi.adminListOrders(resolved.value),
   });
 }
 
