@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { payoutsApi } from "../api/payouts.api";
 import type {
   AdminPayoutsParams,
@@ -9,8 +9,12 @@ import { computed, toValue, type MaybeRefOrGetter } from "vue";
 export const payoutKeys = {
   all: ["payouts"] as const,
   adminStats: () => [...payoutKeys.all, "admin", "stats"] as const,
+  // Prefix shared by every admin list page, whatever the filters. Invalidate
+  // this instead of `adminList()`: passing no params builds a key ending in
+  // `undefined`, which never prefix-matches a key ending in a params object.
+  adminLists: () => [...payoutKeys.all, "admin", "list"] as const,
   adminList: (params?: AdminPayoutsParams) =>
-    [...payoutKeys.all, "admin", "list", params] as const,
+    [...payoutKeys.adminLists(), params] as const,
   adminDetail: (id: string) =>
     [...payoutKeys.all, "admin", "detail", id] as const,
 };
@@ -33,11 +37,13 @@ export function useAdminPayouts(params?: MaybeRefOrGetter<AdminPayoutsParams>) {
   });
 }
 
-export function useAdminPayout(id: string) {
+export function useAdminPayout(id: MaybeRefOrGetter<string>) {
+  const resolved = computed(() => toValue(id));
+
   return useQuery({
-    queryKey: payoutKeys.adminDetail(id),
-    queryFn: () => payoutsApi.adminGetPayout(id),
-    enabled: !!id,
+    queryKey: computed(() => payoutKeys.adminDetail(resolved.value)),
+    queryFn: () => payoutsApi.adminGetPayout(resolved.value),
+    enabled: computed(() => !!resolved.value),
   });
 }
 
@@ -58,7 +64,8 @@ export function useAdminUpdatePayout() {
         queryKey: payoutKeys.adminDetail(variables.id),
       });
       queryClient.invalidateQueries({ queryKey: payoutKeys.adminStats() });
-      queryClient.invalidateQueries({ queryKey: payoutKeys.adminList() });
+      queryClient.invalidateQueries({ queryKey: payoutKeys.adminLists() });
     },
   });
 }
+

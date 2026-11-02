@@ -261,6 +261,13 @@ const router = createRouter({
           component: () =>
             import("@/domains/payouts/pages/AdminPayoutsPage.vue"),
         },
+        {
+          path: "payouts/:id",
+          name: "admin-payout-detail",
+          component: () =>
+            import("@/domains/payouts/pages/AdminPayoutDetailPage.vue"),
+          props: true,
+        },
       ],
     },
     {
