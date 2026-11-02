@@ -26,11 +26,13 @@ export function useAdminOrders(params?: MaybeRefOrGetter<OrdersParams>) {
   });
 }
 
-export function useAdminOrderDetail(id: string) {
+export function useAdminOrderDetail(id: MaybeRefOrGetter<string>) {
+  const resolved = computed(() => toValue(id));
+
   return useQuery({
-    queryKey: orderKeys.adminDetail(id),
-    queryFn: () => ordersApi.adminGetOrderDetail(id),
-    enabled: !!id,
+    queryKey: computed(() => orderKeys.adminDetail(resolved.value)),
+    queryFn: () => ordersApi.adminGetOrderDetail(resolved.value),
+    enabled: computed(() => !!resolved.value),
   });
 }
 
