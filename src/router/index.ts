@@ -180,6 +180,13 @@ const router = createRouter({
           component: () =>
             import("@/domains/payouts/pages/SellerEarningsPage.vue"),
         },
+        {
+          path: "payouts/:id",
+          name: "seller-payout-detail",
+          component: () =>
+            import("@/domains/payouts/pages/SellerPayoutDetailPage.vue"),
+          props: true,
+        },
       ],
     },
     {

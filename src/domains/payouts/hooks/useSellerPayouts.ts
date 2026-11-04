@@ -23,10 +23,12 @@ export function useSellerPayouts(
   });
 }
 
-export function useSellerPayout(id: string) {
+export function useSellerPayout(id: MaybeRefOrGetter<string>) {
+  const resolved = computed(() => toValue(id));
+
   return useQuery({
-    queryKey: sellerPayoutKeys.detail(id),
-    queryFn: () => sellerPayoutsApi.getMyPayout(id),
-    enabled: !!id,
+    queryKey: computed(() => sellerPayoutKeys.detail(resolved.value)),
+    queryFn: () => sellerPayoutsApi.getMyPayout(resolved.value),
+    enabled: computed(() => !!resolved.value),
   });
 }
