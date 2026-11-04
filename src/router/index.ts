@@ -174,6 +174,12 @@ const router = createRouter({
           component: () =>
             import("@/domains/reviews/pages/SellerReviewsPage.vue"),
         },
+        {
+          path: "payouts",
+          name: "seller-payouts",
+          component: () =>
+            import("@/domains/payouts/pages/SellerEarningsPage.vue"),
+        },
       ],
     },
     {
